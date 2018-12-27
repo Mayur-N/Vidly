@@ -4,16 +4,44 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
     public class MoviesController : Controller
     {
         // GET: Movies/Random
+        /// <returns></returns>
         public ActionResult Random()
         {
+            /*Below way of passing data to view will work when view needs data from only Model
+            however when view needs dara from multiple models then we need to pass ViewModel object to view() which is shown below. 
+
             var movie = new Movie() { Name = "Shrek!"};
             return View(movie);
+            */
+
+
+            var movie = new Movie { Name = "Shrek!"};
+            var customers = new List<Customer>
+            {
+                new Customer{Id = 1, Name = "Mayur"},
+                new Customer{Id = 2, Name = "Himani"},
+                new Customer{Id = 3, Name = "Rahul"},
+                new Customer{Id = 4, Name = "Babu"},
+                new Customer{Id = 5, Name = "Gopi"},
+
+            };
+
+            var viewModel = new RandomMovieViewModel
+            {
+                Movie = movie,
+                Customers = customers
+            };
+
+            return View(viewModel);
+
+
         }
 
         public ActionResult Edit(int id)
